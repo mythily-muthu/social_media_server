@@ -9,8 +9,8 @@ import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
-import { register } from "./controllers/auth";
-import { authRoutes } from "./controllers/auth.js"
+import { register } from "./controllers/auth.js";
+
 
 // configurations
 const __filename = fileURLToPath(import.meta.url);
@@ -34,7 +34,7 @@ const storage = multer.diskStorage({
         cb(null, "public/assets");
     },
     filename: function (req, file, cb) {
-        cb(null, file.originalname);
+        cb(null, "mythu" + "_" + file.originalname);
     },
 });
 const upload = multer({ storage });
@@ -43,13 +43,13 @@ const upload = multer({ storage });
 app.post("/auth/register", upload.single("picture"), register);
 
 //routes
-app.use("auth/register", authRoutes);
+
 
 // mongoose setup
 let PORT = process.env.PORT || 6001;
 
+mongoose.set('strictQuery', true); // avoid deprecate warning
 mongoose.connect(process.env.MONGO_URL, {
-
     useUnifiedTopology: true,
 }).then(
     () => {

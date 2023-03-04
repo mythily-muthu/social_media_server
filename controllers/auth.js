@@ -1,11 +1,12 @@
 import bcrypt from "bcrypt";
-import { Jwt } from "jsonwebtoken";
-import User from "../models/User.routes";
+
+import User from "../models/User.js";
 
 
 // registser user
-export let registser = async (req, res) => {
+export const register = async (req, res) => {
     try {
+        console.log("in register");
 
         let {
             firstName,
@@ -18,15 +19,15 @@ export let registser = async (req, res) => {
             occupation
         } = req.body;
 
-        let salt = await bcrypt.genSalt()
-        let passwordHash = await bcrypt.hash(password, salt)
+        let salt = await bcrypt.genSalt();//returns a dynamic string "fweafewafweaf"
+        let passwordHash = await bcrypt.hash(password, salt)  // muthu123, "fweafewafweaf" = fawfeaw5634fv423q43fff
 
         let newUser = new User(
             {
                 firstName,
                 lastName,
                 email,
-                password: passwordHash,
+                password: passwordHash,//fawfeaw5634fv423q43fff
                 picturePath,
                 friends,
                 location,
@@ -40,6 +41,7 @@ export let registser = async (req, res) => {
         res.status(201).json(newUser)
 
     } catch (error) {
+        console.log("error:", error.message);
         res.status(500).json({ error: error.message })
     }
-}
+};
