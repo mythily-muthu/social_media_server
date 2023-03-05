@@ -55,10 +55,10 @@ export let login = async (req, res) => {
         //email
         let user = await User.findOne({ email: email }); //it returns user object
         console.log("user Details:", user);// if user {details} else null
-        if (!user) return res.status(400).json({ msg: "User does not exist" })
+        if (!user) return res.status(400).json({ msg: "User does not exist" })// (!user) => when email field is empty
 
         //password
-        const isMatch = await bcrypt.compare(password, user.password) // boolean
+        const isMatch = await bcrypt.compare(password, user.password) // returns boolean
         console.log("password match:", isMatch);
         if (!isMatch) return res.status(400).json({ msg: "invalid credentials" })
 
