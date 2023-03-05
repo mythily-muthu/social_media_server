@@ -63,7 +63,8 @@ export let login = async (req, res) => {
 
         //token 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-        delete user.password; // need to remove password from user object not in db;
+        user.password = undefined;
+        // need to remove password from user object not in db;
         res.status(200).json({ token, user });
     } catch (error) {
         res.status(500).json({ error: error.message })
