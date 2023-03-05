@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-
+import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
 
@@ -45,3 +45,28 @@ export const register = async (req, res) => {
         res.status(500).json({ error: error.message })
     }
 };
+
+//loggin
+
+export let login = async (req, res) => {
+    try {
+        let { email, password } = req.body;
+
+        //email
+        let user = await User.findOne({ email: email }); //it returns user object
+        console.log("user Details:", user);// if user {details} else null
+        if (!user) return res.status(400).json({ msg: "User does not exist" })
+
+        //password
+        const isMatch = await bcrypt.compare(password, user.password) // boolean
+        console.log("password match:", isMatch);
+        if (!isMatch) return res.status(400).json({ msg: "invalid credentials" })
+
+        //token 
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+        delete user.password; // need to remove password from user object not in db;
+        res.status(200).json({ token, user });
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
