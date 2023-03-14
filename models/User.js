@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema(
         password: { type: String, required: true, min: 2, max: 40, unique: true },
         picturePath: { type: String, default: "" },
         friends: { type: Array, default: [] },
-        locatiion: String,
+        location: String,
         occupation: String,
         viewedProfile: Number,
         impressions: Number,
