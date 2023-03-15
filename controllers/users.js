@@ -4,11 +4,9 @@ import User from "../models/User.js";
 // Read
 export const getUser = async (req, res) => {
     try {
-        console.log("in get user");
         let { id } = req.params;
         let user = await User.findById(id);
         user.password = undefined;
-        console.log("single_user:", user);
         res.status(200).send(user)
     } catch (error) {
         res.status(404).json({ msg: error.message })
@@ -38,9 +36,7 @@ export const addRemoveFriend = async (req, res) => {
     try {
         let { id, friendId } = req.params;
         let user = await User.findById(id);  //get user details from db
-        console.log("user:", user);
         let friend = await User.findById(friendId);
-        console.log("friend:", friend);
 
         if (user.friends.includes(friendId)) {
             //remove friend

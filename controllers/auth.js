@@ -6,7 +6,6 @@ import User from "../models/User.js";
 // registser user
 export const register = async (req, res) => {
     try {
-        console.log("in register");
 
         let {
             firstName,
@@ -49,7 +48,7 @@ export const register = async (req, res) => {
 //login
 export let login = async (req, res) => {
     try {
-        console.log("in login");
+
         let { email, password } = req.body;
         //email
         let user = await User.findOne({ email: email }); //it returns user object

@@ -1,3 +1,1 @@
 let header_token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MGNiMWQxN2M0OThkY2E2MmMwNTExOSIsImlhdCI6MTY3ODU1NDgxMH0.Vz5p4gq36LiFeB9_SgXFwpA59YRHvTNhFBkAXVwJUOU"
-
-console.log("hi");
