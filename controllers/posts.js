@@ -41,10 +41,13 @@ export const getFeedPosts = async (req, res) => {
 
 export const getUserPosts = async (req, res) => {
     try {
-
-        const { userId } = req.body;
-        const post = await Post.find({ userId });
-        res.status(200).json(post);
+        // http://localhost:6001/posts/6411951db7738caef5e1917e/posts
+        console.log("in user posts");
+        const { userId } = req.params;
+        console.log("url params", req.params);
+        const posts = await Post.find({ userId });
+        console.log("user posts:", posts);
+        res.status(200).json(posts);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -53,7 +56,7 @@ export const getUserPosts = async (req, res) => {
 //update
 export const likePost = async (req, res) => {
     try {
-        let { id } = req.params.id;
+        let id = req.params.id;
         let { userId } = req.body;
         const post = await Post.findById(id);
         const isLiked = Post.likes.get(userId);
